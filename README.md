@@ -2,16 +2,81 @@
 
 ### Import this Module and Use
 
-+ `className` is required
+#### Parameters
 
-+ `attributes` not required
+##### `className` : string is required
+
+##### `attributes` : table (string | any) is required
+
+#### Functions
+
+- `cls(className : string)`
+
+- `__new__(attributes : table (string | any))`
+
+#### Example
 
 ```lua
 local classes = require 'cls'
 
+attributes = { name = 'cls', age = 20 }
+
 local Myclass = cls('className'):__new__(attributes)
 
 ```
+
+### Use Property Functions
+
+#### Parameters
+
+##### `key` : string is required
+
+##### `val` : any is required
+
+#### Functions
+
+- `setProperty(key, val)`
+
+- `getProperty(key)`
+
+- `deleteProperty(key)`
+
+#### Example
+
+```lua
+local classes = require 'cls'
+
+local Myclass = cls('className'):__new__()
+
+key = 'name'
+val = 'cls'
+
+-- Set Property of Class
+Myclass:setProperty(key, val)
+
+-- Returns Property of Class and Print in Console
+print(Myclass:getProperty(key))
+--- Output: 'cls'
+
+-- Delete Property of Class
+Myclass:deleteProperty(key)
+```
+
+### Use `__name__` Function
+
+#### Example
+
+```lua
+local classes = require 'cls'
+
+local Myclass = cls('className'):__new__()
+
+-- Print Name of Class
+print(Myclass:__name__())
+--- Output: 'className'
+```
+
+### Functions List
 
 | Function | Usage | Parameters |
 | :-- | :-- | :--
