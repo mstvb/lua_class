@@ -2,46 +2,42 @@ function cls(className)
 	--- Function Class
 	---
 	--- Parameters
-	--- @param className : string -- is required
+	--- @params className : string >> is required
 	---
 	--- Attributes
-	--- @field class : table (string | any)
-	--- @field cls : table (string | any)
+	--- @types class : table (string | any)
+	--- @types cls : table (string | any)
 	---
 	--- Functions
-	--- @field __new__(attributes : table (string | any)) >> Create new Instance of Class
-	--- @field setProperty(key : string, val : any) >> Set a Property to Class
-	--- @field deleteProperty(key : string) >> Delete a Property of Class
-	--- @field getProperty(key : string) >> Returns a Property of CLass
-	--- @field __name__() >> Returns the Name of Class
-	---
-	
-	-- Assert when className not exists
-	assert(className, 'className is required.')
+	--- __new__(attributes : table (string | any)) >> Create new Instance of Class
+	--- setProperty(key : string, val : any) >> Set a Property to Class
+	--- deleteProperty(key : string) >> Delete a Property of Class
+	--- getProperty(key : string) >> Returns a Property of CLass
+	--- __name__() >> Returns the Name of Class
+	--- 
+	--- Returns 
+	--- @returns class : table (string | any)
 
+	-- Class Table
 	local class = {}
+
+	-- Class Attributes Table
 	local cls = { __name = className, __index = class }
-	
-	--- Create a New Instance of Class
-	---
-	--- Parameters
-	--- @param attributes : table (string : any) -- not required
-	---
-	--- Attributes
-	--- @field cls : table (string | any)
-	---
-	
+
 	function class:__new__(attributes)
 		--- Create new Instance of Class
 		---
 		--- Parameters
-		--- @param attributes : table (string : any)
+		--- @params attributes : table (string : any) >> not required
 		---
 		--- Attributes
-		--- @field class : table (string : any)
-		--- @field cls : table (string : any)
-		---
+		--- @types class : table (string : any)
+		--- @types cls : table (string : any)
+		--- 
+		--- Returns
+		--- @returns self : table (string | any)
 
+		-- Returns a Table with Custom Attributes and Class Attributes
 		return setmetatable(attributes or {}, cls)
 	end
 	
@@ -49,19 +45,13 @@ function cls(className)
 		--- Set Property of Class
 		---
 		--- Parameters
-		--- @param key : string -- required
-		--- @param val : any -- required
+		--- @params key : string >> is required
+		--- @params val : any >> is required
 		--- 
 		--- Attributes
-		--- @field class : table (string : any)
-		---
+		--- @types class : table (string : any)
 		
-		-- Assert when key not exists
-		assert(key, 'key is required')
-		
-		-- Assert when val not exists
-		assert(val, 'val is required')
-		
+		-- Set Value with Key to Table
 		class[key] = val
 	end
 
@@ -69,15 +59,12 @@ function cls(className)
 		--- Delete Property of Class
 		---
 		--- Parameters
-		--- @param key : string -- required
+		--- @params key : string >> is required
 		---
 		--- Attributes
-		--- @field class : table (string | any)
-		---
-		
-		-- Assert when key not exists
-		assert(key, 'key is required')
+		--- @types class : table (string | any)
 
+		-- Delete Value from Table
 		class[key] = nil
 	end 
 	
@@ -85,16 +72,15 @@ function cls(className)
 		--- Returns Property of Class
 		---
 		--- Parameters
-		--- @param key : string -- required
+		--- @params key : string >> is required
 		---
 		--- Attributes
-		--- @field class : table (string | any)
+		--- @types class : table (string | any)
 		---
+		--- Returns
+		--- @returns Property : any
 		
-		-- Assert when key not exists
-		assert(key, 'key is required')
-
-		--- @return Property : any
+		-- Returns Property
 		return class[key]
 	end
 	
@@ -102,13 +88,64 @@ function cls(className)
 		--- Returns Name of Class
 		---
 		--- Attributes
-		--- @field cls : table (string | any)
+		--- @types cls : table (string | any)
 		---
-		--- @return className : string
+		--- Returns
+		--- @returns className : string
+		
+		-- Returns Name of Class as String
 		return cls['__name']
 	end
-	
-	--- @return class
+
+	function class:__str__(...)
+		--- Returns Class as String with Attributes
+		--- 
+		--- Parameters
+		--- @params ... : string >> not required
+		--- 
+		--- Attributes
+		--- @types class : table (string | any)
+		--- @types cls : table (string | any)
+		--- @types result : string
+		--- 
+		--- Returns
+		--- @returns string
+
+		-- Attributes Placeholder
+		result = ''
+
+		-- For Loop 
+		for i = 1, select('#', ...) do
+			result = result .. string.format(' %s : %s |', select(i, ...), class[select(i, ...)])
+		end
+
+		-- IF Parameters not Exists
+		if result == '' then result = '---' end
+
+		-- Returns Class as String with Attributes
+		return string.format('className : %s | %s', cls['__name'], result)
+	end
+
+	function class:__call__(func)
+		--- Call Function for Class
+		--- 
+		--- Parameters
+		--- @params func : any >> not required
+		--- 
+		--- Attributes
+		--- @types cls : table (string | any)
+
+		-- IF is func a Function
+		if type(func) == 'function' then
+			print(string.format('class: %s has called', cls['__name']))
+			func()
+
+		-- IF func is not a Function
+		else
+			print(string.format('class: %s has called', cls['__name']))
+		end
+	end
+
 	return class
 end
 
