@@ -76,12 +76,49 @@ print(Myclass:__name__())
 --- Output: 'className'
 ```
 
+### Use `__str__` Function
+
+#### Example
+
+```lua
+local classes = require 'cls'
+
+local myclass = cls('MyClass'):__new__()
+
+local myclass:setProperty('isRunning', false)
+
+-- Print Class as String
+print(myclass:__str__('isRunning'))
+--- Output: 'className : MyClass | isRunning: false |'
+```
+
+### Use `__call__` Function
+
+#### Example
+
+```lua
+local classes = require 'cls'
+
+local myclass = cls('MyClass'):__new__()
+
+-- Create a Class Call 
+myclass:__call__(function()
+    print('I am a Function Call')
+end)
+
+--- Output: 'class: MyClass has called'
+--- Output: 'I am a Function Call'
+
+```
+
 ### Functions List
 
 | Function | Usage | Parameters |
 | :-- | :-- | :--
 | ```__new__``` | Create Instance of Class | ```attributes : table (string : any)``` |
-| ```__name__``` | Returns Name of Class as String | --
+| ```__name__``` | Returns Name of Class as String | -- |
+| ```__str__``` | Returns Class as String | ```keys : string``` |
+| ```__call__``` | Print Message and Execute a Function | ```func : Function``` |
 | ```setProperty``` | Set Property of Class | ```key : string```, ```val : any``` |
 | ```deleteProperty``` | Delete Property of Class | ```key : string``` |
 | ```getProperty``` | Returns Property of Class| ```key : string``` |
